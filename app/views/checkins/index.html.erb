@@ -1,0 +1,86 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      List of all checkins
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Add a new checkin
+    </h2>
+
+    <form action="/insert_checkin" method="post">
+      <div class="form-group">
+        <label for="habit_id_box">
+          Habit
+        </label>
+
+        <input type="text" id="habit_id_box" name="query_habit_id" class="form-control">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Create checkin
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Habit
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @checkins.each do |checkin| %>
+      <tr>
+        <td>
+          <%= checkin.id %>
+        </td>
+
+        <td>
+          <%= checkin.habit_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(checkin.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(checkin.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/checkins/<%= checkin.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

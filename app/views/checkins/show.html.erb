@@ -1,0 +1,71 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Checkin #<%= @checkin.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/checkins" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="/delete_checkin/<%= @checkin.id %>" class="btn btn-block btn-outline-secondary">
+          Delete checkin
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Habit
+      </dt>
+      <dd>
+        <%= @checkin.habit_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@checkin.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@checkin.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h2>
+      Edit checkin
+    </h2>
+
+    <form action="/modify_checkin/<%= @checkin.id %>"  method="post" >
+      <div class="form-group">
+        <label for="habit_id_box">
+          Habit
+        </label>
+
+        <input type="text" id="habit_id_box" name="query_habit_id" class="form-control" value="<%= @checkin.habit_id %>">
+      </div>
+
+      <button class="btn btn-block btn-outline-secondary">
+        Update checkin
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
