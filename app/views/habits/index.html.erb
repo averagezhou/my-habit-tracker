@@ -1,7 +1,7 @@
 <div class="row mb-3">
   <div class="col-md-12">
     <h1>
-      List of all habits
+      <%= @current_user.username.capitalize %>'s Habits
     </h1>
   </div>
 </div>
@@ -45,11 +45,14 @@
     <div class="card" style="width: 22rem;">
       <div class="card-body">
         <h5 class="card-title"><%= habit.name %></h5>
-       <p class="card-text">Current Streak: <%=habit.checkin_count%> days in a row</p>
-
+       <% if habit.checkin_count == 1 %>
+        <p class="card-text">Current Streak: <%=habit.checkin_count%> day in a row</p>
+        <% else %>
+          <p class="card-text">Current Streak: <%=habit.checkin_count%> days in a row</p>
+        <% end %>
        <p class="card-text">Time of Day: <%=habit.time_of_day.strftime('%I:%M %p')%> today</p>
        <% if habit.checkin_today == FALSE %>
-        <a href="/insert_checkin/<%= habit.id %>" class="btn btn-success btn-sm">Check-in</a>
+        <a href="/insert_checkin/<%= habit.id %>" class="btn btn-success">Check-in</a>
        <% else %>
        <a href="#" class="btn btn-outline-secondary">Already checked-in today</a>
        <% end %>
@@ -61,97 +64,6 @@
 <% end %>
 </div>
 
-<hr>
-<div class="row mb-3">
-  <div class="col-md-12">
-    <table class="table">
-      <tr>
-        <th>
-          ID
-        </th>
 
-        <th>
-          Name
-        </th>
-
-        <th>
-          Time of day
-        </th>
-
-        <th>
-          First day
-        </th>
-
-        <th>
-          Checkin count
-        </th>
-
-        <th>
-          Checkin today
-        </th>
-
-        <th>
-          Owner
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @habits.each do |habit| %>
-      <tr>
-        <td>
-          <%= habit.id %>
-        </td>
-
-        <td>
-          <%= habit.name %>
-        </td>
-
-        <td>
-          <%= habit.time_of_day.utc.strftime('%I:%M %p') %>
-        </td>
-
-        <td>
-          <%= habit.first_day %>
-        </td>
-
-        <td>
-          <%= habit.checkin_count %>
-        </td>
-
-        <td>
-          <%= habit.checkin_today %>
-        </td>
-
-        <td>
-          <%= habit.owner_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(habit.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(habit.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/habits/<%= habit.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
 
 <hr>
