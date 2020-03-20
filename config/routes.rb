@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Routes for the Checkin resource:
 
   # CREATE
-  post("/insert_checkin/:path_id", { :controller => "checkins", :action => "create" })
+  get("/insert_checkin/:path_id", { :controller => "checkins", :action => "create" })
           
   # READ
  # get("/checkins", { :controller => "checkins", :action => "index" })
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   #post("/modify_checkin/:path_id", { :controller => "checkins", :action => "update" })
   
   # DELETE
-  get("/delete_checkin/:path_id", { :controller => "checkins", :action => "destroy" })
+  get("/delete_checkin/:habit_id/:path_id", { :controller => "checkins", :action => "destroy" })
 
   #------------------------------
 
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   # UPDATE
   
   post("/modify_habit/:path_id", { :controller => "habits", :action => "update" })
+  get("/adjust_habit/:path_id", { :controller => "habits", :action => "adjust" })
   
   # DELETE
   get("/delete_habit/:path_id", { :controller => "habits", :action => "destroy" })

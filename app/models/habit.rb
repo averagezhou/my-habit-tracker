@@ -18,5 +18,6 @@ class Habit < ApplicationRecord
   has_many :habit_checkins, :class_name => "Checkin", :dependent => :destroy
   validates :time_of_day, :presence => true
   validates :name, :presence => true
+  validates :first_day, :presence => true
 
 end

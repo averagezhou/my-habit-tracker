@@ -16,27 +16,20 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     the_id = params.fetch("path_id")
     @checkin.habit_id = the_id
-    current_habit = Habit.where( :id => the_id )
+    current_habit = Habit.where({ :id => the_id }).at(0)
 
-    if @checkin.valid?
-      if current_habit.checkin_today == FALSE
+    if current_habit.checkin_today == FALSE
+      if @checkin.valid?
         @checkin.save
-        current_habit.checkin_today = TRUE
+        redirect_to("/adjust_habit/"+the_id)
 
-          if (Date.today - current_habit.first_day) < current_habit.checkin_count
-            current_habit.checkin_count = 0
-            current_habit.first_day = Date.today
-            current_habit.save
-            redirect_to("/checkins", { :notice => "Checkin created successfully." }
-          else
-            current_habit.save
-          end
       end
-        
+      
 
     else
-      redirect_to("/checkins", { :notice => "Checkin failed to create successfully." })
+      redirect_to("/habits", { :notice => "Checkin failed to create successfully." })
     end
+
   end
 
   def update
@@ -55,10 +48,11 @@ class CheckinsController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
+    habit_id = params.fetch("habit_id")
     @checkin = Checkin.where({ :id => the_id }).at(0)
 
     @checkin.destroy
 
-    redirect_to("/checkins", { :notice => "Checkin deleted successfully."} )
+    redirect_to("/habits/"+habit_id, { :notice => "Checkin deleted successfully."} )
   end
 end

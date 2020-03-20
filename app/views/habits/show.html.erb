@@ -93,6 +93,9 @@ Checkins
           Name
         </th>
 
+        <th>
+        </th>
+
       <% @habit.habit_checkins.each do |check| %>
       <tr>
         <td>
@@ -100,7 +103,11 @@ Checkins
         </td>
 
         <td>
-          check.created_at
+          <%= check.created_at %>
+        </td>
+
+        <td>
+          <a href="/delete_checkin/<%= @habit.id %>/<%= check.id %>" class="btn btn-warning">Delete</a>
         </td>
 
       <% end %>

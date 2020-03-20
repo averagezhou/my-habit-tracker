@@ -1,6 +1,6 @@
 class HabitsController < ApplicationController
   def index
-    @habits = @current_user.habits.order({ :created_at => :desc })
+    @habits = Habit.all.order({ :created_at => :desc })
 
     render({ :template => "habits/index.html.erb" })
   end
@@ -45,6 +45,26 @@ class HabitsController < ApplicationController
     end
   end
 
+  def adjust
+    the_id = params.fetch("path_id")
+    @habit = Habit.where({ :id => the_id }).at(0)
+    @habit.checkin_today = TRUE
+
+    if (Date.today - @habit.first_day) >= @habit.checkin_count
+      @habit.checkin_count = @habit.checkin_count + 1
+    else
+      @habit.checkin_count = 0
+      @habit.first_day = Date.today
+    end
+
+    if @habit.valid?
+      @habit.save
+      redirect_to("/habits/#{@habit.id}", { :notice => "Checkin updated successfully."} )
+    else
+      redirect_to("/habits/#{@habit.id}", { :alert => "Checkin failed to update successfully." })
+    end
+  end
+
   def destroy
     the_id = params.fetch("path_id")
     @habit = Habit.where({ :id => the_id }).at(0)
@@ -53,4 +73,5 @@ class HabitsController < ApplicationController
 
     redirect_to("/habits", { :notice => "Habit deleted successfully."} )
   end
+
 end
