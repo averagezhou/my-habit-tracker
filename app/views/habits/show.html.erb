@@ -106,9 +106,11 @@ Checkins
           <%= check.created_at %>
         </td>
 
+        <% if check.created_at.to_date >= @habit.first_day%>
         <td>
           <a href="/delete_checkin/<%= @habit.id %>/<%= check.id %>" class="btn btn-warning">Delete</a>
         </td>
+        <% end %>
 
       <% end %>
     </table>

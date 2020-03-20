@@ -2,8 +2,8 @@ namespace(:dev) do
   desc "Hydrate the database with some dummy data to look at so that developing is easier"
   task({ :prime => :environment}) do
     u = User.new
-    u.email = "bob@example.com"
-    u.username = "bob"
+    u.email = "catie@example.com"
+    u.username = "catie"
     u.password = "password"
     u.save
 
@@ -15,7 +15,14 @@ namespace(:dev) do
     h.save
 
     h = Habit.new
-    h.name = "Call Mom"
+    h.name = "Workout"
+    h.owner_id = u.id
+    h.first_day = Date.today
+    h.time_of_day = Time.now
+    h.save
+
+    h = Habit.new
+    h.name = "Floss"
     h.owner_id = u.id
     h.first_day = Date.today
     h.time_of_day = Time.now

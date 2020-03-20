@@ -49,9 +49,17 @@ class CheckinsController < ApplicationController
   def destroy
     the_id = params.fetch("path_id")
     habit_id = params.fetch("habit_id")
+    current_habit = Habit.where({ :id => habit_id }).at(0)
     @checkin = Checkin.where({ :id => the_id }).at(0)
+    date = current_habit.created_at.to_date
 
     @checkin.destroy
+    current_habit.checkin_count=current_habit.checkin_count-1
+    
+    if date == Date.today
+      current_habit.checkin_today = FALSE
+    end
+    current_habit.save
 
     redirect_to("/habits/"+habit_id, { :notice => "Checkin deleted successfully."} )
   end

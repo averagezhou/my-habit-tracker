@@ -1,6 +1,6 @@
 class HabitsController < ApplicationController
   def index
-    @habits = Habit.all.order({ :created_at => :desc })
+    @habits = @current_user.habits.order({ :created_at => :desc })
 
     render({ :template => "habits/index.html.erb" })
   end
@@ -66,12 +66,16 @@ class HabitsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    @habit = Habit.where({ :id => the_id }).at(0)
+    if @habit.owner_id == @current_user.id 
+      the_id = params.fetch("path_id")
+     @habit = Habit.where({ :id => the_id }).at(0)
 
-    @habit.destroy
+      @habit.destroy
 
-    redirect_to("/habits", { :notice => "Habit deleted successfully."} )
+      redirect_to("/habits", { :notice => "Habit deleted successfully."} )
+    else 
+      redirect_to("/habits", { :notice => "You do not have access to this page" })
+    end
   end
 
 end
