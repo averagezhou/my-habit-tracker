@@ -10,4 +10,5 @@
 
 class Checkin < ApplicationRecord
   belongs_to :associated_habit, :class_name => "Habit", :foreign_key => "habit_id"
+
 end

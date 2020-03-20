@@ -5,16 +5,16 @@ Rails.application.routes.draw do
   # Routes for the Checkin resource:
 
   # CREATE
-  post("/insert_checkin", { :controller => "checkins", :action => "create" })
+  post("/insert_checkin/:path_id", { :controller => "checkins", :action => "create" })
           
   # READ
-  get("/checkins", { :controller => "checkins", :action => "index" })
+ # get("/checkins", { :controller => "checkins", :action => "index" })
   
-  get("/checkins/:path_id", { :controller => "checkins", :action => "show" })
+  #get("/checkins/:path_id", { :controller => "checkins", :action => "show" })
   
   # UPDATE
   
-  post("/modify_checkin/:path_id", { :controller => "checkins", :action => "update" })
+  #post("/modify_checkin/:path_id", { :controller => "checkins", :action => "update" })
   
   # DELETE
   get("/delete_checkin/:path_id", { :controller => "checkins", :action => "destroy" })

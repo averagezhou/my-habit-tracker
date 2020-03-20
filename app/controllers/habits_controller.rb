@@ -36,10 +36,6 @@ class HabitsController < ApplicationController
 
     @habit.name = params.fetch("query_name")
     @habit.time_of_day = params.fetch("query_time_of_day")
-    @habit.first_day = params.fetch("query_first_day")
-    @habit.checkin_count = params.fetch("query_checkin_count")
-    @habit.checkin_today = params.fetch("query_checkin_today", false)
-    @habit.owner_id = params.fetch("query_owner_id")
 
     if @habit.valid?
       @habit.save

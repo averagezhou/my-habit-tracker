@@ -19,5 +19,4 @@ class Habit < ApplicationRecord
   validates :time_of_day, :presence => true
   validates :name, :presence => true
 
-
 end

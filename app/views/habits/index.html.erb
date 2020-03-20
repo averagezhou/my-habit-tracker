@@ -40,6 +40,29 @@
 
 <hr>
 <div class="row mb-3">
+  <% @habits.each do |habit| %>
+  <div class="col-md-4">
+    <div class="card" style="width: 22rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= habit.name %></h5>
+       <p class="card-text">Current Streak: <%=habit.checkin_count%> days in a row</p>
+
+       <p class="card-text">Time of Day: <%=habit.time_of_day.strftime('%I:%M %p')%> today</p>
+       <% if habit.checkin_today == FALSE %>
+        <a href="/insert_checkin/<%= habit.id %>" class="btn btn-success btn-sm">Check-in</a>
+       <% else %>
+       <a href="#" class="btn btn-outline-secondary">Already checked-in today</a>
+       <% end %>
+       <a href="/habits/<%= habit.id %>" class="btn btn-outline-secondary">More Details</a>
+       <a href="/delete_habit/<%= habit.id %>" class="btn btn-warning">Delete</a>
+      </div>
+    </div>
+    </div>
+<% end %>
+</div>
+
+<hr>
+<div class="row mb-3">
   <div class="col-md-12">
     <table class="table">
       <tr>
@@ -94,7 +117,7 @@
         </td>
 
         <td>
-          <%= habit.time_of_day %>
+          <%= habit.time_of_day.utc.strftime('%I:%M %p') %>
         </td>
 
         <td>

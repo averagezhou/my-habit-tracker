@@ -1,6 +1,6 @@
 class CheckinsController < ApplicationController
   def index
-    @checkins = Checkin.all.order({ :created_at => :desc })
+    @checkins = @current_user.habits.habit_checkins({ :created_at => :desc })
 
     render({ :template => "checkins/index.html.erb" })
   end
@@ -14,11 +14,26 @@ class CheckinsController < ApplicationController
 
   def create
     @checkin = Checkin.new
-    @checkin.habit_id = params.fetch("query_habit_id")
+    the_id = params.fetch("path_id")
+    @checkin.habit_id = the_id
+    current_habit = Habit.where( :id => the_id )
 
     if @checkin.valid?
-      @checkin.save
-      redirect_to("/checkins", { :notice => "Checkin created successfully." })
+      if current_habit.checkin_today == FALSE
+        @checkin.save
+        current_habit.checkin_today = TRUE
+
+          if (Date.today - current_habit.first_day) < current_habit.checkin_count
+            current_habit.checkin_count = 0
+            current_habit.first_day = Date.today
+            current_habit.save
+            redirect_to("/checkins", { :notice => "Checkin created successfully." }
+          else
+            current_habit.save
+          end
+      end
+        
+
     else
       redirect_to("/checkins", { :notice => "Checkin failed to create successfully." })
     end
