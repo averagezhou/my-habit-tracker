@@ -1,6 +1,6 @@
 class HabitsController < ApplicationController
   def index
-    @habits = Habit.all.order({ :created_at => :desc })
+    @habits = @current_user.habits.order({ :created_at => :desc })
 
     render({ :template => "habits/index.html.erb" })
   end
@@ -8,8 +8,11 @@ class HabitsController < ApplicationController
   def show
     the_id = params.fetch("path_id")
     @habit = Habit.where({:id => the_id }).at(0)
-
-    render({ :template => "habits/show.html.erb" })
+    if @habit.owner_id == @current_user.id 
+      render({ :template => "habits/show.html.erb" })
+    else 
+      redirect_to("/habits", { :notice => "You do not have access to this page" })
+    end
   end
 
   def create
